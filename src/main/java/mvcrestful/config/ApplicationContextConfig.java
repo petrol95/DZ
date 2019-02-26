@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 
-@ComponentScan("mvcrestful.*")
+@ComponentScan("mvcrestful")
 
 public class ApplicationContextConfig {
 

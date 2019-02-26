@@ -37,7 +37,7 @@
     </dependency>
 
     <!-- Servlet Library -->
-    <!-- http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api%20-->
+    <!-- http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api-->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
