@@ -24,14 +24,14 @@ public class MainRESTController {
 
     // URL:
     // http://localhost:8888/visits
-    @RequestMapping(value = "/visits", //
-            method = RequestMethod.GET, //
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<Visit> getVisits() {
-        List<Visit> list = visitDAO.getAllVisits();
-        return list;
-    }
+//    @RequestMapping(value = "/visits", //
+//            method = RequestMethod.GET, //
+//            produces = {MediaType.APPLICATION_JSON_VALUE})
+//    @ResponseBody
+//    public List<Visit> getVisits() {
+//        List<Visit> list = visitDAO.getAllVisits();
+//        return list;
+//    }
 
 //     URL:
 //     http://localhost:8888/visits/{userID}/{pageID}
@@ -39,8 +39,8 @@ public class MainRESTController {
             method = RequestMethod.POST, //
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public Visit addVisit(@PathVariable("userID") String userID, @PathVariable("pageID") String pageID) {
-        return visitDAO.addVisit(userID, pageID);
+    public boolean addVisit(@PathVariable("userID") int userID, @PathVariable("pageID") int pageID) {
+        return visitDAO.insertVisit(userID, pageID);
     }
 
 }
