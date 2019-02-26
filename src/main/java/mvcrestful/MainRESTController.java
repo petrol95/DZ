@@ -1,6 +1,8 @@
 package mvcrestful;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +41,7 @@ public class MainRESTController {
             method = RequestMethod.POST, //
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public boolean addVisit(@PathVariable("userID") int userID, @PathVariable("pageID") int pageID) {
+    public Map addVisit(@PathVariable("userID") int userID, @PathVariable("pageID") int pageID) {
         return visitDAO.insertVisit(userID, pageID);
     }
 
