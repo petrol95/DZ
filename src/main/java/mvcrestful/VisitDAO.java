@@ -1,26 +1,20 @@
 package mvcrestful;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class VisitDAO implements AutoCloseable {
 
-    private Map<String, Integer> result;
     private final Connection connection;
 
     public VisitDAO() {
         connectDriver();
         this.connection = createConnection("visits.db");
-        this.result = new HashMap<String, Integer>();
     }
 
     private Connection createConnection(String dbUrl) {
@@ -46,29 +40,35 @@ public class VisitDAO implements AutoCloseable {
         }
     }
 
+    // Method for POST-request
     public Map insertVisit(int persId, int pageId) {
-
-        Date date = new Date(); // формат даты!!!
+        LocalDate date = LocalDate.now();
         Map<String, Integer> resMap = new HashMap<String, Integer>();
-        resMap = null;
 
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO Visits (PERS_ID, PAGE_ID, " +
                     "VISIT_DATE) VALUES (" + persId + ", " + pageId + ", '" + date + "')");
             if (statement.executeUpdate() > 0) {
-                System.out.println(getAllVisits(date, date));
                 resMap.put("visits", getAllVisits(date, date));
-            //    resMap.put("visitors", getUniqueVisitors(date, date));
+                resMap.put("visitors", getUniqueVisitors(date, date));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return resMap;
+    }
+
+    // Method for GET-request
+    public Map getStat(LocalDate dateFrom, LocalDate dateTo) {
+        Map<String, Integer> resMap = new HashMap<String, Integer>();
+        resMap.put("visits", getAllVisits(dateFrom, dateTo));
+        resMap.put("visitors", getUniqueVisitors(dateFrom, dateTo));
+        resMap.put("frequenters", getFreqVisitors(dateFrom, dateTo));
+        return resMap;
     }
 
     // All visits
-    public int getAllVisits(Date dateFrom, Date dateTo) {
+    private int getAllVisits(LocalDate dateFrom, LocalDate dateTo) {
         int col = 0;
         try {
             Statement statement = connection.createStatement();
@@ -84,7 +84,7 @@ public class VisitDAO implements AutoCloseable {
     }
 
     // Unique visitors
-    public int getUniqueVisitors(Date dateFrom, Date dateTo) {
+    private int getUniqueVisitors(LocalDate dateFrom, LocalDate dateTo) {
         int col = 0;
         try {
             Statement statement = connection.createStatement();
@@ -100,7 +100,7 @@ public class VisitDAO implements AutoCloseable {
     }
 
     // Const visitors
-    public int getConstVisitors(Date dateFrom, Date dateTo) {
+    private int getFreqVisitors(LocalDate dateFrom, LocalDate dateTo) {
         int col = 0;
         try {
             Statement statement = connection.createStatement();

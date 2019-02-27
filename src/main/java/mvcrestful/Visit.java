@@ -1,5 +1,6 @@
 package mvcrestful;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Visit {
@@ -7,12 +8,12 @@ public class Visit {
     private int id;
     private int userId;
     private int pageId;
-    private Date visitDate;
+    private LocalDate visitDate;
 
     public Visit() {
     }
 
-    public Visit(int id, int userId, int pageId, Date visitDate) {
+    public Visit(int id, int userId, int pageId, LocalDate visitDate) {
         this.id = id;
         this.userId = userId;
         this.pageId = pageId;
@@ -43,11 +44,11 @@ public class Visit {
         this.pageId = pageId;
     }
 
-    public Date getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 }
